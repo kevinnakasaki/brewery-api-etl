@@ -61,16 +61,19 @@ with DAG(
     transform_silver = PythonOperator(
         task_id="silver",
         python_callable=silver_job,
+        op_kwargs=DEFAULT_PARAMS,
         doc_md="Apply transformations and partition to data",
     )
     aggregate_gold = PythonOperator(
         task_id="gold",
         python_callable=gold_job,
+        op_kwargs=DEFAULT_PARAMS,
         doc_md="Create the aggregated view of breweries per type and location",
     )
     data_quality = PythonOperator(
         task_id="data_quality",
         python_callable=data_quality_job,
+        op_kwargs=DEFAULT_PARAMS,
         doc_md="Validate data and persist the resulting metrics for future analysis",
     )
 
