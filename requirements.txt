@@ -1,0 +1,5 @@
+pyspark==3.5.3
+delta-spark==3.3.2
+apache-airflow-providers-amazon==9.14.0
+apache-airflow-providers-apache-spark==5.3.2
+requests==2.32.5
