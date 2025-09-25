@@ -43,18 +43,18 @@ with DAG(
 
     DEFAULT_PARAMS.update(spark_configs="{{ params.spark_configs }}")
 
-    bronze = PythonOperator(
+    fetch_data_bronze = PythonOperator(
         task_id="bronze",
         python_callable=bronze_job,
         op_kwargs=DEFAULT_PARAMS,
         doc_md="Ingest raw data 'as-is' from Open Brewery API",
     )
-    silver = PythonOperator(
+    transform_silver = PythonOperator(
         task_id="silver",
         python_callable=silver_job,
         doc_md="Apply transformations and partition to data",
     )
-    gold = PythonOperator(
+    aggregate_gold = PythonOperator(
         task_id="gold",
         python_callable=gold_job,
         doc_md="Create the aggregated view of breweries per type and location",
@@ -65,4 +65,4 @@ with DAG(
         doc_md="Validate data and persist the resulting metrics for future analysis",
     )
 
-    bronze >> silver >> gold >> data_quality
+    fetch_data_bronze >> transform_silver >> aggregate_gold >> data_quality
