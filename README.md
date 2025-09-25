@@ -33,8 +33,8 @@ AIRFLOW_UID=1000
 AIRFLOW_GID=0
 AIRFLOW_USERNAME=admin
 AIRFLOW_PASSWORD=admin
-FERNET_KEY=Vo3PiB2FicePNYIbcLoq3SrG1umhsLgQgLLG5-6HNjI=
-SECRET_KEY=1gwxw8chOj1FlqK8lXLayyykmHuaBnooZkERWJgMa5A
+FERNET_KEY=...
+SECRET_KEY=...
 
 # Postgres
 POSTGRES_USER=airflow
@@ -43,6 +43,14 @@ POSTGRES_PASSWORD=airflow
 # MinIO
 MINIO_ACCESS_KEY=minioadmin
 MINIO_SECRET_KEY=minioadmin
+```
+
+For the `FERNET_KEY` and `SECRET_KEY`, you could execute the following commands in your terminal, and then store their outputs in the file:
+```bash
+$~ python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+# ...
+$~ python -c "import secrets; print(secrets.token_url(32))"
+# ...
 ```
 
 #### Clone the repo
