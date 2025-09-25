@@ -29,7 +29,7 @@ DEFAULT_PARAMS = {
 with DAG(
     dag_id="brewery_etl_pipeline",
     default_args=DEFAULT_ARGS,
-    schedule="@daily",
+    schedule=None,
     catchup=False,
     description="Brewery ETL from API to Datalake with Medallion Architecture",
     params={
