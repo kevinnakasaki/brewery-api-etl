@@ -32,7 +32,7 @@ def data_quality_job(**kwargs) -> None:
         logging.info("Saving data into the Quality Layer")
         (
             df_quality.write.mode("overwrite")
-            .partitionBy(["layer", "created_at"])
+            .partitionBy(["datalake_layer", "created_at"])
             .format("parquet")
             .save(kwargs["quality_path"])
         )

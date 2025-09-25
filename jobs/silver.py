@@ -124,7 +124,7 @@ def silver_job(**kwargs) -> None:
         logging.info("Saving data into the Silver Layer")
         (
             df.write.mode("overwrite")
-            .partitionBy(["coutry", "state"])
+            .partitionBy(["country", "state"])
             .format("parquet")
             .save(kwargs["silver_path"])
         )

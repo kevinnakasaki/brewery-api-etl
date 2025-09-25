@@ -35,7 +35,7 @@ def gold_job(**kwargs) -> None:
             df.groupBy("brewery_type", "country", "state", "city")
             .agg(F.count("*").alias("breweries_qty"))
             .orderBy(F.col("breweries_qty").desc())
-        )
+        ).withColumn("ingestion_date", F.current_date())
         logging.info(
             f"Breweries per Type and Location created: {df_breweries_type_location.count()} records"
         )
