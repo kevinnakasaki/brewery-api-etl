@@ -44,6 +44,7 @@ with DAG(
             description="Additional Spark configuration as key-value pairs.",
         ),
     },
+    render_template_as_native_obj=True,
 ) as dag:
 
     DEFAULT_PARAMS.update(
