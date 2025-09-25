@@ -22,7 +22,7 @@ DEFAULT_PARAMS = {
     "bronze_path": "s3a://bronze/breweries",
     "silver_path": "s3a://silver/breweries",
     "gold_path": "s3a://gold/breweries",
-    "max_records": 10,
+    "quality_path": "s3a://quality/breweries",
 }
 
 
@@ -33,15 +33,23 @@ with DAG(
     catchup=False,
     description="Brewery ETL from API to Datalake with Medallion Architecture",
     params={
+        "max_records": Param(
+            default=100,
+            type="integer",
+            description="Maximum number of records to fetch from the API.",
+        ),
         "spark_configs": Param(
             default={"spark.sql.sources.partitionOverwriteMode": "dynamic"},
             type="object",
             description="Additional Spark configuration as key-value pairs.",
-        )
+        ),
     },
 ) as dag:
 
-    DEFAULT_PARAMS.update(spark_configs="{{ params.spark_configs }}")
+    DEFAULT_PARAMS.update(
+        spark_configs="{{ params.spark_configs }}",
+        max_records="{{ params.max_records }}",
+    )
 
     fetch_data_bronze = PythonOperator(
         task_id="bronze",
